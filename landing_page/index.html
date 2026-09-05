@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortArt - Móveis e Portas em Compensado Ecológico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'portart-green': '#2D5A27', // Verde escuro lembrando a resina
+                        'portart-wood': '#D4A373',  // Cor de madeira natural
+                        'portart-dark': '#1C1C1C',  // Fundo escuro industrial
+                    },
+                    fontFamily: {
+                        sans: ['Raleway', 'sans-serif'],
+                        serif: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Raleway:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --viewport-height: 100vh;
+            --header-height: clamp(58px, calc(4.8vh + 0.9vw), 82px);
+            --floating-footer-height: clamp(56px, calc(4.1vh + 0.8vw), 78px);
+            --floating-footer-height-expanded: clamp(92px, calc(8.4vh + 1.2vw), 128px);
+            --viewport-safe-height: calc(var(--viewport-height) - var(--header-height) - var(--floating-footer-height));
+        }
+
+        @supports (height: 100dvh) {
+            :root {
+                --viewport-height: 100dvh;
+            }
+        }
+        
+        .bg-hero {
+            background-image: linear-gradient(rgba(28, 28, 28, 0.8), rgba(45, 90, 39, 0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .wood-texture {
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4a373' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        body {
+            padding-bottom: calc(var(--floating-footer-height) + 1vh);
+        }
+
+        #navbar .nav-shell {
+            height: var(--header-height);
+        }
+
+        .viewport-fit-section {
+            display: flex;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .viewport-fit-section {
+                min-height: clamp(560px, var(--viewport-safe-height), calc(var(--viewport-height) - 2vh));
+            }
+        }
+
+        #texture-container {
+            height: clamp(320px, calc(var(--viewport-safe-height) - 14vh), 460px);
+        }
+
+        #floating-footer {
+            transition: all 0.45s ease;
+        }
+
+        #floating-footer .footer-shell {
+            min-height: var(--floating-footer-height);
+            padding: clamp(0.5rem, 1vh, 0.85rem) clamp(1rem, 2.2vw, 1.75rem);
+        }
+
+        #floating-footer .footer-extra {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.45s ease;
+        }
+
+        #floating-footer.is-expanded {
+            bottom: 0;
+            background-color: #000000;
+        }
+
+        #floating-footer.is-expanded .footer-shell {
+            min-height: var(--floating-footer-height-expanded);
+        }
+
+        #floating-footer.is-expanded .footer-extra {
+            max-height: 18vh;
+            opacity: 1;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: calc(var(--floating-footer-height) + 1.2vh);
+            }
+
+            #texture-container {
+                height: clamp(300px, 52vh, 430px);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased selection:bg-portart-green selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="nav-shell flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="bg-portart-green p-2 rounded-lg">
+                        <i data-lucide="trees" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="font-serif font-bold text-2xl tracking-tight text-portart-dark">Port<span class="text-portart-green">Art</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#sobre" class="text-gray-600 hover:text-portart-green font-medium transition-colors">A Revolução Verde</a>
+                    <a href="#produtos" class="text-gray-600 hover:text-portart-green font-medium transition-colors">Nossos Produtos</a>
+                    <a href="#vantagens" class="text-gray-600 hover:text-portart-green font-medium transition-colors">Vantagens</a>
+                    <a href="#contato" class="bg-portart-green text-white px-6 py-2.5 rounded-full font-medium hover:bg-green-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Solicitar Orçamento</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-portart-green focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#sobre" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-portart-green hover:bg-gray-50 rounded-md">A Revolução Verde</a>
+                <a href="#produtos" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-portart-green hover:bg-gray-50 rounded-md">Nossos Produtos</a>
+                <a href="#vantagens" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-portart-green hover:bg-gray-50 rounded-md">Vantagens</a>
+                <a href="#contato" class="block mt-4 px-3 py-3 text-center text-base font-medium text-white bg-portart-green rounded-md">Solicitar Orçamento</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-hero min-h-[88vh] flex items-center pt-16 lg:pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="max-w-3xl">
+                <span class="inline-block py-1 px-3 rounded-full bg-portart-green/20 border border-portart-green/30 text-green-300 font-semibold text-sm mb-6 backdrop-blur-sm">
+                    Marcenaria Industrial & Sustentável
+                </span>
+                <h1 class="text-4xl md:text-5xl xl:text-6xl font-serif font-bold text-white leading-tight mb-6">
+                    Design ousado.<br>Resistência extrema.
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl font-light leading-relaxed">
+                    Elevamos o <strong class="text-white font-semibold">Compensado Ecológico Verde</strong> da construção civil para a alta marcenaria. Móveis e portas com estética industrial, imunes à umidade e feitos para durar gerações.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#produtos" class="flex items-center justify-center bg-portart-green text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition-all shadow-[0_0_20px_rgba(45,90,39,0.4)]">
+                        Ver Projetos
+                        <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                    </a>
+                    <a href="#sobre" class="flex items-center justify-center bg-white/10 text-white backdrop-blur-md border border-white/20 px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all">
+                        Entenda o Material
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About the Material Section -->
+    <section id="sobre" class="py-14 lg:py-10 wood-texture viewport-fit-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+                <div class="relative self-start">
+                    <div class="absolute -inset-4 bg-portart-green/10 rounded-3xl transform rotate-3"></div>
+                    
+                    <!-- Imagem estática da textura -->
+                    <div id="texture-container" class="relative rounded-2xl shadow-2xl overflow-hidden w-full bg-[#1C1C1C]">
+                        <img src="images/imagem1.png" alt="Textura de compensado verde" class="absolute inset-0 w-full h-full object-cover z-20">
+                    </div>
+                    
+                    <!-- Floating badge -->
+                    <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-xl border-l-4 border-portart-green hidden md:block z-30">
+                    </div>
+                </div>
+                
+                <div class="w-full">
+                    <h2 class="text-sm font-bold text-portart-green tracking-widest uppercase mb-2">O Segredo da PortArt</h2>
+                    <h3 class="text-2xl md:text-3xl font-serif font-bold text-portart-dark mb-4">Por que usar a Chapa Ecológica Resinada Verde?</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
+                        <div class="space-y-4 text-[15px] text-gray-600 leading-relaxed">
+                            <p>
+                                Tradicionalmente usado nas condições mais severas da construção civil, o <strong>Compensado Resinado Verde</strong> foi ressignificado pela PortArt. Nós enxergamos a beleza bruta e a resistência inigualável desse material.
+                            </p>
+                            <p>
+                                A resina especial que dá o tom esverdeado à chapa não é apenas estética: ela <strong>sela as fibras da madeira</strong>, criando uma barreira impermeável contra água, mofo e cupins. O resultado? Um material perfeito para áreas úmidas, com uma pegada industrial contemporânea.
+                            </p>
+                        </div>
+
+                        <div class="space-y-3 md:pt-1">
+                            <div class="bg-white/80 backdrop-blur-sm rounded-xl border border-portart-green/20 p-4 shadow-sm">
+                                <h4 class="font-bold text-gray-900">Sustentável</h4>
+                                <p class="text-sm text-gray-600 mt-1">Madeira de reflorestamento (Pinus).</p>
+                            </div>
+                            <div class="bg-white/80 backdrop-blur-sm rounded-xl border border-portart-wood/40 p-4 shadow-sm">
+                                <h4 class="font-bold text-gray-900">Estética Única</h4>
+                                <p class="text-sm text-gray-600 mt-1">Bordas expostas e textura industrial marcante.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Gallery -->
+    <section id="produtos" class="py-16 lg:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-bold text-portart-green tracking-widest uppercase mb-2">Nosso Portfólio</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-portart-dark mb-6">Feito sob medida para o seu estilo</h3>
+                <p class="text-gray-600">Transformamos chapas brutas em peças de design sofisticadas, ideais para arquitetura moderna, estilo loft e ambientes despojados.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Product 1: Portas -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-4">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="images/portas_e_pivotantes.avif" alt="Porta de design em compensado" class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent z-20">
+                            <h4 class="text-white text-2xl font-serif font-bold">Portas & Pivotantes</h4>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Portas de passagem e de entrada robustas. O peso ideal e a resistência que não empena com a mudança de clima.</p>
+                </div>
+
+                <!-- Product 2: Lavabos -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-4">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="images/lavabos_e_banheiros.avif" alt="Móvel de lavabo em madeira resistente" class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent z-20">
+                            <h4 class="text-white text-2xl font-serif font-bold">Lavabos & Banheiros</h4>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Esqueça móveis que estufam. A resina verde protege o gabinete contra os respingos da pia e a umidade natural do banheiro.</p>
+                </div>
+
+                <!-- Product 3: Roupeiros -->
+                <div class="group cursor-pointer">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-4">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="images/ropeiros_industriais.avif" alt="Roupeiro e guarda-roupa industrial" class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent z-20">
+                            <h4 class="text-white text-2xl font-serif font-bold">Roupeiros Industriais</h4>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Guarda-roupas e closets com estrutura aparente. Alta capacidade de carga para suportar prateleiras pesadas sem envergar.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="vantagens" class="py-16 lg:py-20 bg-portart-dark text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Por que escolher móveis PortArt?</h2>
+                <div class="w-24 h-1 bg-portart-green mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+                <!-- Feature 1 -->
+                <div>
+                    <div class="bg-white/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform rotate-3">
+                        <i data-lucide="shield-check" class="text-portart-green w-10 h-10"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Imune à Umidade</h4>
+                    <p class="text-gray-400 text-sm">A selagem resinada garante que a madeira não absorva água, não estufe e não apodreça.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div>
+                    <div class="bg-white/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform -rotate-3">
+                        <i data-lucide="hammer" class="text-portart-green w-10 h-10"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Alta Resistência</h4>
+                    <p class="text-gray-400 text-sm">Estrutura de compensado prensado suporta impactos e peso muito superiores ao MDF convencional.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div>
+                    <div class="bg-white/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform rotate-3">
+                        <i data-lucide="leaf" class="text-portart-green w-10 h-10"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Eco-Friendly</h4>
+                    <p class="text-gray-400 text-sm">Produzido a partir de pinus de reflorestamento certificado, unindo design e responsabilidade ambiental.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div>
+                    <div class="bg-white/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 transform -rotate-3">
+                        <i data-lucide="ruler" class="text-portart-green w-10 h-10"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">100% Customizado</h4>
+                    <p class="text-gray-400 text-sm">Projetos desenhados e executados milimetricamente para o seu espaço, unindo serralheria e marcenaria.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="py-16 lg:py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row">
+                
+                <!-- Info Side -->
+                <div class="lg:w-2/5 bg-portart-green p-10 text-white flex flex-col justify-between relative overflow-hidden">
+                    <!-- Decor element -->
+                    <div class="absolute -right-10 -bottom-10 opacity-10">
+                        <i data-lucide="trees" class="w-64 h-64"></i>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-serif font-bold mb-6">Traga seu projeto para a PortArt</h3>
+                        <p class="text-green-100 mb-10 leading-relaxed">
+                            Seja uma porta pivotante imponente, um móvel resistente para o seu lavabo ou um roupeiro com estilo loft. Nós realizamos.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <i data-lucide="phone" class="w-6 h-6 text-green-300"></i>
+                                <span>(11) 99999-9999</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <i data-lucide="mail" class="w-6 h-6 text-green-300"></i>
+                                <span>contato@portart.com.br</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-green-300"></i>
+                                <span>Oficina criativa em São Paulo, SP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Side -->
+                <div class="lg:w-3/5 p-8 md:p-12 lg:p-14">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-8">Solicite um Orçamento</h4>
+                    <form onsubmit="event.preventDefault(); showSuccessMessage();" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-portart-green focus:border-portart-green outline-none transition-colors" placeholder="João Silva">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">WhatsApp / Telefone</label>
+                                <input type="tel" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-portart-green focus:border-portart-green outline-none transition-colors" placeholder="(00) 00000-0000">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Qual produto você tem interesse?</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-portart-green focus:border-portart-green outline-none transition-colors bg-white">
+                                <option>Porta (Interna ou Pivotante)</option>
+                                <option>Móvel para Lavabo / Banheiro</option>
+                                <option>Roupeiro / Closet</option>
+                                <option>Projeto Personalizado</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Detalhes do Projeto</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-portart-green focus:border-portart-green outline-none transition-colors" placeholder="Conte-nos um pouco sobre as medidas, ambiente ou ideia que você tem..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-portart-dark text-white font-bold py-4 rounded-lg hover:bg-black transition-colors flex justify-center items-center gap-2">
+                            Enviar Solicitação
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </button>
+                        
+                        <div id="success-message" class="hidden mt-4 p-4 bg-green-50 text-portart-green rounded-lg border border-green-200 text-center font-medium">
+                            Mensagem enviada com sucesso! Nossa equipe entrará em contato em breve.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Footer -->
+    <footer id="floating-footer" class="fixed left-0 bottom-0 z-50 w-full bg-black border-t border-gray-800 text-gray-300 shadow-[0_-8px_24px_rgba(0,0,0,0.4)]">
+        <div class="footer-shell">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-2 min-w-0">
+                    <i data-lucide="trees" class="text-portart-green w-5 h-5 shrink-0"></i>
+                    <span class="font-serif font-bold text-base tracking-tight text-white whitespace-nowrap">Port<span class="text-portart-green">Art</span></span>
+                    <span class="hidden sm:block text-xs text-gray-400 truncate">Marcenaria em compensado ecológico</span>
+                </div>
+
+                <div class="flex items-center gap-3 text-xs sm:text-sm">
+                    <a href="#contato" class="text-gray-200 hover:text-white transition-colors">Contato</a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-extra text-center sm:text-left text-[11px] sm:text-xs text-gray-400 leading-relaxed">
+                &copy; 2026 PortArt Marcenaria. Especialistas em Compensado Ecológico Naval. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Navbar background on scroll
+        const navbar = document.getElementById('navbar');
+        const floatingFooter = document.getElementById('floating-footer');
+
+        function handleFooterExpandOnPageEnd() {
+            const pageHeight = document.documentElement.scrollHeight;
+            const viewportBottom = window.scrollY + window.innerHeight;
+            const isNearBottom = viewportBottom >= pageHeight - 80;
+
+            floatingFooter.classList.toggle('is-expanded', isNearBottom);
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+
+            handleFooterExpandOnPageEnd();
+        });
+
+        window.addEventListener('resize', handleFooterExpandOnPageEnd);
+
+        // Fake form submission
+        function showSuccessMessage() {
+            const msg = document.getElementById('success-message');
+            msg.classList.remove('hidden');
+            setTimeout(() => {
+                msg.classList.add('hidden');
+            }, 5000);
+        }
+
+        handleFooterExpandOnPageEnd();
+
+    </script>
+</body>
+</html>
